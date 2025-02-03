@@ -1,12 +1,17 @@
-const port = 4000;
 const express = require("express");
-const app = express();
-const mongoose = require("mongoose");
-const jwt = require("jsonwebtoken");
-const multer = require("multer");
 const path = require("path");
-const cors = require("cors");
 
-app.use(express.json());
-app.use(cors());
+const app = express();
+const port = 4000;
 
+// Serve static files from the dist folder
+app.use(express.static(path.join(__dirname, "../frontend/dist")));
+
+// Catch-all handler for client-side routing
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "../frontend/dist", "index.html"));
+});
+
+app.listen(port, () => {
+  console.log(`Server is running on http://localhost:${port}`);
+});
