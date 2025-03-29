@@ -29,7 +29,22 @@ export const Navbar = () => {
         <li onClick={() => {setMenu("kids")}}><Link style = {{ textDecoration: 'none', color: "#626262"}} to='/kids'>Kids</Link>{menu === "kids"?<hr/>:<></>}</li>
       </ul>
       <div className="nav-login-cart">
-        <Link onClick={() => {setMenu("Login")}} style = {{ textDecoration: 'none'}} to='/login'><button>Login</button></Link>
+      {localStorage.getItem('auth-token') ? (
+          <button onClick={() => {
+              localStorage.removeItem('auth-token');
+              window.location.replace('/');
+          }}>
+              Logout
+          </button>
+      ) : (
+          <Link 
+              onClick={() => setMenu("Login")} 
+              style={{ textDecoration: 'none' }} 
+              to='/login'
+          >
+              <button>Login</button>
+          </Link>
+      )}
         <Link onClick={() => {setMenu("Cart")}} style = {{ textDecoration: 'none'}} to='/cart'><img src={cart_icon} alt="" /></Link>
         <div className="nav-cart-count">{getTotalCartItems()}</div>
       </div>
